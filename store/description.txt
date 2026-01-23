@@ -1,0 +1,46 @@
+JSON Viewer Pro - Beautiful JSON Formatting Made Easy
+
+🚀 FEATURES:
+
+• Select & View - Simply select any JSON text on a webpage, right-click, and choose "View as JSON" to see it beautifully formatted
+
+• Tree View - Interactive collapsible tree structure with expand/collapse controls for easy navigation
+
+• Syntax Highlighting - Color-coded JSON with distinct colors for keys, strings, numbers, booleans, and null values
+
+• Keyboard Shortcut - Press Ctrl+Shift+J (Cmd+Shift+J on Mac) to quickly view selected JSON
+
+• Copy & Download - One-click copy to clipboard or download as a .json file
+
+• Paste JSON - Paste any JSON directly into the viewer for instant formatting
+
+• Dark Theme - Beautiful dark theme with Tokyo Night-inspired color scheme
+
+• Expand/Collapse All - Quickly expand or collapse all nested objects and arrays
+
+📋 HOW TO USE:
+
+1. Select any JSON text on a webpage
+2. Right-click and choose "View as JSON"
+3. A new tab opens with your beautifully formatted JSON!
+
+Or use the keyboard shortcut: Ctrl+Shift+J (Cmd+Shift+J on Mac)
+
+✨ PERFECT FOR:
+
+• Developers working with APIs
+• Debugging JSON responses
+• Viewing configuration files
+• Analyzing data structures
+• Quick JSON formatting and validation
+
+🔒 PRIVACY:
+
+This extension does not collect any personal data. All JSON processing happens locally in your browser. No data is sent to any external servers.
+
+📧 SUPPORT:
+
+Found a bug or have a feature request? Visit our GitHub page:
+https://github.com/tomerhy/json-viewer
+
+Made with ❤️ by tomerhy
