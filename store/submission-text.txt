@@ -1,0 +1,48 @@
+================================================================================
+CHROME WEB STORE SUBMISSION TEXT
+================================================================================
+
+--------------------------------------------------------------------------------
+SINGLE PURPOSE
+--------------------------------------------------------------------------------
+
+JSON Viewer Pro allows users to select JSON text on any webpage and view it in a beautifully formatted, interactive viewer with syntax highlighting and tree navigation.
+
+
+--------------------------------------------------------------------------------
+PERMISSION JUSTIFICATION
+--------------------------------------------------------------------------------
+
+contextMenus:
+Required to add the "View as JSON" option to the browser's right-click context menu, allowing users to easily format selected JSON text.
+
+activeTab:
+Required to read the text that the user has selected on the current webpage when they choose to view it as JSON.
+
+storage:
+Required to temporarily pass the selected JSON text from the webpage to the viewer page. Data is cleared immediately after use.
+
+
+--------------------------------------------------------------------------------
+DATA USAGE
+--------------------------------------------------------------------------------
+
+This extension does NOT collect, store, or transmit any user data.
+
+• No personal information is collected
+• No browsing history is tracked
+• No data is sent to external servers
+• No analytics or tracking is used
+
+All JSON processing happens locally in the user's browser. The only data stored is the temporarily selected JSON text (using Chrome's local storage API), which is immediately cleared after the viewer page loads.
+
+The extension does not sell or transfer user data to third parties.
+
+
+--------------------------------------------------------------------------------
+HOST PERMISSION JUSTIFICATION (if asked about <all_urls>)
+--------------------------------------------------------------------------------
+
+The extension requires access to all URLs so users can select and format JSON text from any webpage they visit. The extension only activates when the user explicitly selects text and chooses "View as JSON" from the context menu. No data is accessed or read without direct user action.
+
+================================================================================
