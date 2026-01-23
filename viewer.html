@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Viewer Pro</title>
+  <link rel="stylesheet" href="viewer.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 3C4.11929 3 3 4.11929 3 5.5V8.5C3 9.88071 4.11929 11 5.5 11H8.5C9.88071 11 11 9.88071 11 8.5V5.5C11 4.11929 9.88071 3 8.5 3H5.5Z" fill="currentColor"/>
+            <path d="M15.5 3C14.1193 3 13 4.11929 13 5.5V8.5C13 9.88071 14.1193 11 15.5 11H18.5C19.8807 11 21 9.88071 21 8.5V5.5C21 4.11929 19.8807 3 18.5 3H15.5Z" fill="currentColor" opacity="0.7"/>
+            <path d="M5.5 13C4.11929 13 3 14.1193 3 15.5V18.5C3 19.8807 4.11929 21 5.5 21H8.5C9.88071 21 11 19.8807 11 18.5V15.5C11 14.1193 9.88071 13 8.5 13H5.5Z" fill="currentColor" opacity="0.7"/>
+            <path d="M15.5 13C14.1193 13 13 14.1193 13 15.5V18.5C13 19.8807 14.1193 21 15.5 21H18.5C19.8807 21 21 19.8807 21 18.5V15.5C21 14.1193 19.8807 13 18.5 13H15.5Z" fill="currentColor" opacity="0.4"/>
+          </svg>
+          <span class="logo-text">JSON Viewer Pro</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-icon" id="expandAll" title="Expand All">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
+          </svg>
+        </button>
+        <button class="btn btn-icon" id="collapseAll" title="Collapse All">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+          </svg>
+        </button>
+        <button class="btn btn-icon" id="copyBtn" title="Copy JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+        </button>
+        <button class="btn btn-icon" id="downloadBtn" title="Download JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+        </button>
+        <div class="divider"></div>
+        <button class="btn btn-primary" id="pasteBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+            <rect x="8" y="2" width="8" height="4" rx="1"/>
+          </svg>
+          Paste JSON
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="panels">
+        <div class="panel panel-input">
+          <div class="panel-header">
+            <span class="panel-title">Input</span>
+            <span class="panel-badge" id="inputStats"></span>
+          </div>
+          <div class="panel-content">
+            <textarea id="jsonInput" placeholder="Paste your JSON here or select text on any page and right-click → 'View as JSON'"></textarea>
+          </div>
+        </div>
+
+        <div class="panel panel-output">
+          <div class="panel-header">
+            <span class="panel-title">Formatted Output</span>
+            <div class="view-toggle">
+              <button class="view-btn active" data-view="tree">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 12H9M21 6H9M21 18H9M5 12a1 1 0 11-2 0 1 1 0 012 0zM5 6a1 1 0 11-2 0 1 1 0 012 0zM5 18a1 1 0 11-2 0 1 1 0 012 0z"/>
+                </svg>
+                Tree
+              </button>
+              <button class="view-btn" data-view="raw">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                </svg>
+                Raw
+              </button>
+            </div>
+          </div>
+          <div class="panel-content">
+            <div id="treeView" class="json-tree"></div>
+            <pre id="rawView" class="json-raw" style="display: none;"></pre>
+            <div id="errorView" class="error-view" style="display: none;">
+              <div class="error-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M15 9l-6 6M9 9l6 6"/>
+                </svg>
+              </div>
+              <div class="error-title">Invalid JSON</div>
+              <div class="error-message" id="errorMessage"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="toast" id="toast">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+      <span id="toastMessage">Copied to clipboard!</span>
+    </div>
+  </div>
+
+  <script src="viewer.js"></script>
+</body>
+</html>
