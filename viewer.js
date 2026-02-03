@@ -18,11 +18,22 @@ class JSONViewer {
   }
   
   init() {
+    // Display version
+    this.displayVersion();
+    
     // Load JSON from storage (from context menu selection)
     this.loadFromStorage();
     
     // Setup event listeners
     this.setupEventListeners();
+  }
+  
+  displayVersion() {
+    const versionBadge = document.getElementById('versionBadge');
+    if (versionBadge && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
+      const manifest = chrome.runtime.getManifest();
+      versionBadge.textContent = `v${manifest.version}`;
+    }
   }
   
   loadFromStorage() {
