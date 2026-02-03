@@ -1,5 +1,54 @@
 // JSON Viewer Pro - Main Script
 
+// GA4 Measurement Protocol Configuration
+const GA_CONFIG = {
+  measurementId: 'G-V3YBSTQHDJ',
+  apiSecret: '50h3CNjWRjW2B2MUYm257Q'
+};
+
+// Get or create a client ID for analytics
+function getClientId() {
+  let clientId = localStorage.getItem('ga_client_id');
+  if (!clientId) {
+    clientId = crypto.randomUUID();
+    localStorage.setItem('ga_client_id', clientId);
+  }
+  return clientId;
+}
+
+// Analytics helper using Measurement Protocol
+function trackEvent(eventName, params = {}) {
+  if (GA_CONFIG.apiSecret === 'YOUR_API_SECRET') {
+    return; // Skip if API secret not configured
+  }
+  
+  const payload = {
+    client_id: getClientId(),
+    events: [{
+      name: eventName,
+      params: {
+        ...params,
+        engagement_time_msec: 100
+      }
+    }]
+  };
+  
+  fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${GA_CONFIG.measurementId}&api_secret=${GA_CONFIG.apiSecret}`, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  }).catch(() => {
+    // Silently fail - analytics should not break the app
+  });
+}
+
+// Track page view on load
+function trackPageView() {
+  trackEvent('page_view', {
+    page_title: 'JSON Viewer Pro',
+    page_location: 'chrome-extension://json-viewer-pro'
+  });
+}
+
 class JSONViewer {
   constructor() {
     this.jsonInput = document.getElementById('jsonInput');
@@ -18,6 +67,9 @@ class JSONViewer {
   }
   
   init() {
+    // Track page view
+    trackPageView();
+    
     // Display version
     this.displayVersion();
     
@@ -40,6 +92,7 @@ class JSONViewer {
     if (typeof chrome !== 'undefined' && chrome.storage) {
       chrome.storage.local.get(['jsonData'], (result) => {
         if (result.jsonData) {
+          trackEvent('feature_usage', { feature: 'context_menu_load' });
           this.jsonInput.value = result.jsonData;
           this.parseAndRender();
           // Clear storage after loading
@@ -61,31 +114,37 @@ class JSONViewer {
     document.querySelectorAll('.view-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const view = e.currentTarget.dataset.view;
+        trackEvent('feature_usage', { feature: 'view_toggle', view_type: view });
         this.switchView(view);
       });
     });
     
     // Expand/Collapse all
     document.getElementById('expandAll').addEventListener('click', () => {
+      trackEvent('button_click', { button_name: 'expand_all' });
       this.expandAll();
     });
     
     document.getElementById('collapseAll').addEventListener('click', () => {
+      trackEvent('button_click', { button_name: 'collapse_all' });
       this.collapseAll();
     });
     
     // Copy button
     document.getElementById('copyBtn').addEventListener('click', () => {
+      trackEvent('button_click', { button_name: 'copy_json' });
       this.copyToClipboard();
     });
     
     // Download button
     document.getElementById('downloadBtn').addEventListener('click', () => {
+      trackEvent('button_click', { button_name: 'download_json' });
       this.downloadJson();
     });
     
     // Paste button
     document.getElementById('pasteBtn').addEventListener('click', async () => {
+      trackEvent('button_click', { button_name: 'paste_json' });
       try {
         const text = await navigator.clipboard.readText();
         this.jsonInput.value = text;
@@ -111,7 +170,18 @@ class JSONViewer {
       this.renderTree();
       this.renderRaw();
       this.showView(this.currentView);
+      
+      // Track successful JSON parse
+      const jsonType = Array.isArray(this.parsedJson) ? 'array' : 'object';
+      const itemCount = Array.isArray(this.parsedJson) ? this.parsedJson.length : Object.keys(this.parsedJson).length;
+      trackEvent('feature_usage', { 
+        feature: 'json_parsed', 
+        json_type: jsonType,
+        item_count: itemCount,
+        size_bytes: new Blob([input]).size
+      });
     } catch (err) {
+      trackEvent('feature_usage', { feature: 'json_parse_error' });
       this.showError(err.message);
     }
   }
@@ -238,11 +308,13 @@ class JSONViewer {
           closingBracket.style.display = 'block';
           e.target.textContent = '▼';
           e.target.classList.remove('collapsed');
+          trackEvent('feature_usage', { feature: 'tree_node_expand' });
         } else {
           content.style.display = 'none';
           closingBracket.style.display = 'none';
           e.target.textContent = '▶';
           e.target.classList.add('collapsed');
+          trackEvent('feature_usage', { feature: 'tree_node_collapse' });
         }
       });
     });
