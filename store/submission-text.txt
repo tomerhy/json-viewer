@@ -27,12 +27,17 @@ Required to temporarily pass the selected JSON text from the webpage to the view
 DATA USAGE
 --------------------------------------------------------------------------------
 
-This extension does NOT collect, store, or transmit any user data.
+This extension collects anonymous usage analytics via Google Analytics 4:
 
-• No personal information is collected
-• No browsing history is tracked
-• No data is sent to external servers
-• No analytics or tracking is used
+• Anonymous page views and feature usage
+• Button clicks (to understand which features are popular)
+• JSON type and size statistics (NOT the actual JSON content)
+
+What we do NOT collect:
+• No personal information (name, email, etc.)
+• No browsing history outside the extension
+• No actual JSON content you view
+• No data that could identify you personally
 
 All JSON processing happens locally in the user's browser. The only data stored is the temporarily selected JSON text (using Chrome's local storage API), which is immediately cleared after the viewer page loads.
 
