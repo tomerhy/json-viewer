@@ -2,8 +2,8 @@
 
 // GA4 Measurement Protocol Configuration
 const GA_CONFIG = {
-  measurementId: 'G-V3YBSTQHDJ',
-  apiSecret: '50h3CNjWRjW2B2MUYm257Q'
+  measurementId: 'G-CY79S1XCC4',
+  apiSecret: 'XqBAkvLhTnuOOeTtEe9Zpg'
 };
 
 // Get or create a client ID for analytics

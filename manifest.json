@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "JSON Viewer Pro",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Select JSON text and view it beautifully formatted. Tree view, syntax highlighting, copy & download.",
   "permissions": [
     "contextMenus",
